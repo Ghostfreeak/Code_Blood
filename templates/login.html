@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChatTutor — Learn Smarter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/login.css" />
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+
+  <div class="login-wrapper">
+    <div class="login-card">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="18" stroke="url(#grad)" stroke-width="2"/>
+            <path d="M13 15h14M13 20h10M13 25h12" stroke="url(#grad2)" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="28" cy="25" r="4" fill="url(#grad3)"/>
+            <path d="M26.5 25l1 1 2-2" stroke="#0a0f1a" stroke-width="1.5" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="grad" x1="2" y1="2" x2="38" y2="38" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#4fc3f7"/>
+                <stop offset="1" stop-color="#26a69a"/>
+              </linearGradient>
+              <linearGradient id="grad2" x1="13" y1="20" x2="27" y2="20" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#4fc3f7"/>
+                <stop offset="1" stop-color="#26a69a"/>
+              </linearGradient>
+              <linearGradient id="grad3" x1="24" y1="21" x2="32" y2="29" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#4fc3f7"/>
+                <stop offset="1" stop-color="#26a69a"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>ChatTutor</h1>
+          <span class="tagline">AI-Powered Learning</span>
+        </div>
+      </div>
+
+      <div class="welcome-text">
+        <h2>Welcome back, Scholar</h2>
+        <p>Enter your name to begin your learning session.</p>
+      </div>
+
+      <form class="login-form" id="loginForm">
+        <div class="input-group">
+          <label for="username">Your Name</label>
+          <div class="input-wrap">
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="e.g. Alex Johnson"
+              autocomplete="off"
+              maxlength="40"
+              required
+            />
+          </div>
+          <span class="input-hint">No password needed — just your name.</span>
+        </div>
+
+        <button type="submit" class="login-btn" id="loginBtn">
+          <span class="btn-text">Start Learning</span>
+          <svg class="btn-arrow" viewBox="0 0 24 24" fill="none">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </form>
+
+      <div class="features-row">
+        <div class="feature">
+          <span class="feat-dot"></span>
+          <span>Context-aware answers</span>
+        </div>
+        <div class="feature">
+          <span class="feat-dot"></span>
+          <span>Chat history saved</span>
+        </div>
+        <div class="feature">
+          <span class="feat-dot"></span>
+          <span>Powered by Claude AI</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/js/login.js"></script>
+</body>
+</html>
