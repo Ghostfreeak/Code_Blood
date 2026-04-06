@@ -1,7 +1,6 @@
-# 🎓 ChatTutor — AI-Powered Tutor Website
+# 🎓 ChatTutor v2 — AI Tutor with Google Login, Quizzes & Progress Tracking
 
-A hackathon-ready, full-stack AI tutoring web app built with Flask + Claude API.
-Dark navy theme, smooth animations, chat history, session management, and more.
+A full-stack AI tutoring app with per-user data, Google OAuth, auto-generated quizzes, and a progress dashboard.
 
 ---
 
@@ -9,68 +8,52 @@ Dark navy theme, smooth animations, chat history, session management, and more.
 
 ```
 chattutor/
-├── app.py                  # Flask backend (main server)
-├── requirements.txt        # Python dependencies
-├── .env.example            # Environment variables template
+├── app.py                  # Flask backend
+├── requirements.txt
+├── .env.example            # Copy to .env and fill in
+├── chattutor.db            # SQLite DB (auto-created on first run)
 ├── README.md
-├── templates/
-│   ├── login.html          # Login page (username only)
-│   └── chat.html           # Main chat interface
-└── static/
-    ├── css/
-    │   ├── login.css       # Login page styles
-    │   └── chat.css        # Chat page styles
-    └── js/
-        ├── login.js        # Login logic
-        └── chat.js         # Chat logic (sessions, API calls, markdown)
+└── templates/
+    ├── login.html          # Google OAuth login page
+    └── chat.html           # Chat + sidebar with quiz/track record
 ```
 
 ---
 
-## ⚙️ Setup Instructions
+## ⚙️ Setup
 
-### 1. Clone / Download the project
-
-```bash
-cd chattutor
-```
-
-### 2. Create a virtual environment
-
-```bash
-python -m venv venv
-
-# Activate (Mac/Linux):
-source venv/bin/activate
-
-# Activate (Windows):
-venv\Scripts\activate
-```
-
-### 3. Install dependencies
-
+### 1. Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Set your Anthropic API key
-
+### 2. Set up environment
 ```bash
 cp .env.example .env
 ```
 
-Open `.env` and replace `your_api_key_here` with your actual key from https://console.anthropic.com
-
+Fill in `.env`:
 ```
-ANTHROPIC_API_KEY=sk-ant-...
+GROQ_API_KEY=gsk_...              # from console.groq.com
+SECRET_KEY=some-random-string     # any long random string
+GOOGLE_CLIENT_ID=...              # from Google Cloud Console
+GOOGLE_CLIENT_SECRET=...          # from Google Cloud Console
 ```
 
-### 5. Run the app
+### 3. Set up Google OAuth (for real login)
+1. Go to https://console.cloud.google.com
+2. Create a project → **APIs & Services** → **Credentials**
+3. Click **Create Credentials** → **OAuth 2.0 Client ID**
+4. Application type: **Web application**
+5. Add Authorized redirect URI: `http://localhost:5000/auth/callback`
+6. Copy Client ID and Client Secret into `.env`
 
+> **Skip this for testing!** Just use the **⚡ Try Demo** button on the login page — no Google setup needed.
+
+### 4. Run
 ```bash
 python app.py
 ```
-
 Visit: **http://localhost:5000**
 
 ---
@@ -79,67 +62,42 @@ Visit: **http://localhost:5000**
 
 | Feature | Details |
 |---|---|
-| Login page | Username-only, no password required |
-| Chat UI | Deep navy dark theme, eye-friendly |
-| Session history | Saved to localStorage, up to 20 sessions |
-| Profile panel | Username + avatar, switch user, clear data |
-| Reset button | Clears current session with confirmation modal |
-| Context memory | Last 5 message pairs sent to Claude API |
-| Typing indicator | Animated 3-dot bounce while AI responds |
-| Markdown rendering | Bold, italic, code blocks, lists, headers |
-| Suggestion chips | Quick-start prompts on the welcome screen |
-| Sidebar | Collapsible, shows session history |
-| Responsive | Works on mobile and desktop |
+| Google OAuth Login | Secure per-user accounts via Google |
+| Demo Mode | Test instantly without Google setup |
+| Per-user chat history | SQLite, isolated per account |
+| Quiz Generator | AI generates MCQs on any topic |
+| Difficulty levels | Easy / Medium / Hard |
+| Answer explanations | Shown after each question |
+| Track Record sidebar | Accuracy %, total quizzes, per-topic scores |
+| Recent quiz history | Score badges in sidebar |
+| Session history | Chat sessions listed in sidebar |
+| Markdown rendering | Bold, code, lists, headers |
+| Typing indicator | Animated while AI responds |
 
 ---
 
-## 🔌 API Endpoint
+## 🔌 API Endpoints
 
-### `POST /ask`
-
-**Request body:**
-```json
-{
-  "message": "Explain recursion",
-  "history": [
-    { "role": "user", "content": "..." },
-    { "role": "assistant", "content": "..." }
-  ],
-  "username": "Alex"
-}
-```
-
-**Success response:**
-```json
-{ "reply": "Recursion is a technique where..." }
-```
-
-**Error response:**
-```json
-{ "error": "Message cannot be empty" }
-```
+| Method | Route | Description |
+|---|---|---|
+| GET | `/api/me` | Current user info |
+| GET | `/api/sessions` | List user's chat sessions |
+| GET | `/api/sessions/<id>` | Get messages in a session |
+| POST | `/api/ask` | Send a chat message |
+| POST | `/api/quiz/generate` | Generate a quiz |
+| POST | `/api/quiz/submit` | Submit answers, get score |
+| GET | `/api/quiz/history` | List past quiz attempts |
+| GET | `/api/quiz/stats` | Aggregated stats by topic |
 
 ---
 
-## 🎨 Design System
+## 🎨 Design
 
-- **Background**: `#080d18` (deep navy)
-- **Sidebar**: `#0b1220`
-- **Cards/Messages**: `#0e1628` / `#0f1a2e`
-- **Accent Blue**: `#4fc3f7`
-- **Accent Teal**: `#26a69a`
-- **Font**: Sora (display) + JetBrains Mono (code)
+- **Background**: `#060b14` deep navy
+- **Accent**: `#4fc3f7` sky blue + `#26a69a` teal
+- **Font**: Sora + JetBrains Mono
+- Sidebar: Quiz dashboard → Track record → Recent chats
 
 ---
 
-## 🏆 Hackathon Tips
-
-- Present the login → chat flow live
-- Show session history persistence (refresh and history remains)
-- Demo markdown rendering with a code explanation question
-- Show mobile responsiveness
-- Highlight the `/ask` API with Postman for judges
-
----
-
-Built with ❤️ using Flask + Claude AI
+Built with Flask + Groq (Llama 3.1) + SQLite + Authlib

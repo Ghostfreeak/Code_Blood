@@ -1,100 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ChatTutor — Learn Smarter</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/static/css/login.css" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ChatTutor — Sign In</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #060b14;
+    --surface: #0b1220;
+    --card: #0e1a2e;
+    --border: rgba(79,195,247,0.12);
+    --accent: #4fc3f7;
+    --teal: #26a69a;
+    --text: #e8f4fd;
+    --muted: #6b8cac;
+    --google-red: #ea4335;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+  /* Animated background */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 30%, rgba(79,195,247,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 70%, rgba(38,166,154,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  /* Floating orbs */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+    animation: float 8s ease-in-out infinite;
+  }
+  .orb1 { width: 400px; height: 400px; background: #4fc3f7; top: -100px; left: -100px; animation-delay: 0s; }
+  .orb2 { width: 300px; height: 300px; background: #26a69a; bottom: -80px; right: -80px; animation-delay: 3s; }
+  .orb3 { width: 200px; height: 200px; background: #7986cb; top: 50%; left: 60%; animation-delay: 6s; }
+  @keyframes float {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    50% { transform: translate(20px, -20px) scale(1.05); }
+  }
+  /* Grid pattern */
+  .grid-overlay {
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(79,195,247,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(79,195,247,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+  .card {
+    position: relative; z-index: 10;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 56px 48px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(79,195,247,0.05);
+    animation: slideUp 0.6s cubic-bezier(.22,1,.36,1) both;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .logo {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 8px;
+  }
+  .logo-icon {
+    width: 48px; height: 48px;
+    background: linear-gradient(135deg, var(--accent), var(--teal));
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 8px 24px rgba(79,195,247,0.3);
+  }
+  .logo-text {
+    font-size: 26px; font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--teal));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+  }
+  .tagline {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 40px;
+    line-height: 1.6;
+  }
+  .tagline strong { color: var(--text); }
+  h1 {
+    font-size: 28px; font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .divider {
+    display: flex; align-items: center; gap: 12px;
+    margin: 28px 0;
+    color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 1px;
+  }
+  .divider::before, .divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+  .btn-google {
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    width: 100%;
+    padding: 14px 24px;
+    background: #fff;
+    color: #1a1a1a;
+    border: none; border-radius: 12px;
+    font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  }
+  .btn-google:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .btn-google:active { transform: translateY(0); }
+  .google-icon { width: 20px; height: 20px; flex-shrink: 0; }
+  .btn-demo {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%;
+    padding: 14px 24px;
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--border); border-radius: 12px;
+    font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    margin-top: 12px;
+  }
+  .btn-demo:hover {
+    background: rgba(79,195,247,0.07);
+    border-color: var(--accent);
+  }
+  .features {
+    margin-top: 36px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .feat {
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 12px; color: var(--muted);
+    line-height: 1.4;
+  }
+  .feat-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .feat-label { color: var(--text); font-size: 11px; font-weight: 600; }
+  .privacy {
+    margin-top: 24px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+  }
+</style>
 </head>
 <body>
-  <div class="bg-grid"></div>
-  <div class="glow-orb orb-1"></div>
-  <div class="glow-orb orb-2"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+<div class="grid-overlay"></div>
 
-  <div class="login-wrapper">
-    <div class="login-card">
-      <div class="brand">
-        <div class="brand-icon">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="20" cy="20" r="18" stroke="url(#grad)" stroke-width="2"/>
-            <path d="M13 15h14M13 20h10M13 25h12" stroke="url(#grad2)" stroke-width="2" stroke-linecap="round"/>
-            <circle cx="28" cy="25" r="4" fill="url(#grad3)"/>
-            <path d="M26.5 25l1 1 2-2" stroke="#0a0f1a" stroke-width="1.5" stroke-linecap="round"/>
-            <defs>
-              <linearGradient id="grad" x1="2" y1="2" x2="38" y2="38" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#4fc3f7"/>
-                <stop offset="1" stop-color="#26a69a"/>
-              </linearGradient>
-              <linearGradient id="grad2" x1="13" y1="20" x2="27" y2="20" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#4fc3f7"/>
-                <stop offset="1" stop-color="#26a69a"/>
-              </linearGradient>
-              <linearGradient id="grad3" x1="24" y1="21" x2="32" y2="29" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#4fc3f7"/>
-                <stop offset="1" stop-color="#26a69a"/>
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-        <div class="brand-text">
-          <h1>ChatTutor</h1>
-          <span class="tagline">AI-Powered Learning</span>
-        </div>
-      </div>
+<div class="card">
+  <div class="logo">
+    <div class="logo-icon">🎓</div>
+    <div class="logo-text">ChatTutor</div>
+  </div>
+  <p class="tagline">Your <strong>AI-powered</strong> learning companion. Ask anything, take quizzes, track your progress.</p>
 
-      <div class="welcome-text">
-        <h2>Welcome back, Scholar</h2>
-        <p>Enter your name to begin your learning session.</p>
-      </div>
+  <h1>Welcome back</h1>
+  <p style="color:var(--muted);font-size:14px;margin-bottom:4px;">Sign in to access your personal learning dashboard</p>
 
-      <form class="login-form" id="loginForm">
-        <div class="input-group">
-          <label for="username">Your Name</label>
-          <div class="input-wrap">
-            <svg class="input-icon" viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              placeholder="e.g. Alex Johnson"
-              autocomplete="off"
-              maxlength="40"
-              required
-            />
-          </div>
-          <span class="input-hint">No password needed — just your name.</span>
-        </div>
+  <div class="divider">sign in with</div>
 
-        <button type="submit" class="login-btn" id="loginBtn">
-          <span class="btn-text">Start Learning</span>
-          <svg class="btn-arrow" viewBox="0 0 24 24" fill="none">
-            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </button>
-      </form>
+  <a href="/login/google" class="btn-google">
+    <svg class="google-icon" viewBox="0 0 24 24">
+      <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+      <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+    </svg>
+    Continue with Google
+  </a>
 
-      <div class="features-row">
-        <div class="feature">
-          <span class="feat-dot"></span>
-          <span>Context-aware answers</span>
-        </div>
-        <div class="feature">
-          <span class="feat-dot"></span>
-          <span>Chat history saved</span>
-        </div>
-        <div class="feature">
-          <span class="feat-dot"></span>
-          <span>Powered by Claude AI</span>
-        </div>
-      </div>
-    </div>
+  <a href="/login/demo" class="btn-demo">
+    ⚡ Try Demo (no login needed)
+  </a>
+
+  <div class="features">
+    <div class="feat"><span class="feat-icon">💬</span><div><div class="feat-label">AI Chat Tutor</div>Ask anything, get step-by-step help</div></div>
+    <div class="feat"><span class="feat-icon">🧪</span><div><div class="feat-label">Smart Quizzes</div>Auto-generated on any topic</div></div>
+    <div class="feat"><span class="feat-icon">📊</span><div><div class="feat-label">Track Progress</div>See your scores & improvement</div></div>
+    <div class="feat"><span class="feat-icon">🔒</span><div><div class="feat-label">Your Data</div>Private, per-account storage</div></div>
   </div>
 
-  <script src="/static/js/login.js"></script>
+  <p class="privacy">🔒 Your data is private and only visible to you</p>
+</div>
 </body>
 </html>
